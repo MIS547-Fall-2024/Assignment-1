@@ -9,26 +9,20 @@ If you follow all of these instructions, you should have everything you need to 
 If you come from a more technical background, and have already formed strict opinions and preferences about your dev environment, you are welcome to use the tooling that you prefer. That said, should you run into issues related to your dev environment, the MIS547 Instructor and TAs will not provide assistance. 
 
 <aside>
-💡 The deliverables for this assignment are:
-
-</aside>
-
-<aside>
-💡 Definition of Done:
-1. Installed homebrew or choclatey [ ]
-2. Installed Docker desktop [ ]
-3. Installed python, pyenv, and poetry [ ]
-4. Installed VSCode [ ]
-5. Set up a GitHub account [ ]
-6. Created an AWS Account [ ]
-7. Created a GCP Account [ ]
-8. Created an Azure Account [ ]
-9. Created a DigitalOcean Account [ ]
-10. Created a Slack Account [ ]
-11. Installed git and set your email address and username [ ]
-12. Cloned the Week 1 repository [ ]
-13. Joined the MIS547 Slack [ ]
-
+💡 In this assignment, you will:
+    -I nstall a system package manager (homebrew for MacOS or choclatey for Windows) 
+    - Install Docker Desktop
+    - Install Python dev tools
+    - Install git
+    - Install VSCode
+    - Set up a GitHub account
+    - Create an AWS Account
+    - Create a GCP Account
+    - Create an Azure Account
+    - Create a DigitalOcean Account
+    - Create a Slack Account and Joined the MIS547 Slack Workspace
+    - Clone the Assignment 1 repository
+    - Complete the Assignment
 </aside>
 
 # Part 1: Setting up Your Local Development Environment
@@ -131,7 +125,7 @@ wsl --install
     4. Add your user account to the docker users group.
     5. Sign out and sign back in for changes to take effect.
 
-## Step 3: Set Up Important Python Dev Tools
+## Step 3: Install Python Dev Tools (pyenv and poetry)
 
 1. First, we’ll install pyenv. We’ll use pyenv to install and manage different python versions!
 
@@ -183,17 +177,12 @@ Once Poetry is installed and in your path, you can check that you can use poetry
 poetry --version
 ```
 
-## Step 5: Download and install the latest versions of Git
+## Step 4: Download and install the latest versions of Git
 
-[https://git-scm.com/downloads](https://git-scm.com/downloads)
+Follow the download instructions [here]([https://git-scm.com/downloads](https://git-scm.com/downloads)) to install the latest version of Git if you do not already have it.
+ 
 
-Set your username in git: [https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git](https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git)
-
-Set your email address in git: [https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address)
-
-If you would like to tour git and GitHub more thoroughly before we get going, check out their great documentation [here](https://skills.github.com/)
-
-## Step 4: Install VSCode
+## Step 5: Install VSCode
 
 We’ll be using VSCode throughout the semester for our projects. If you prefer a different IDE, that’s awesome, but just know that if you run into issues with your non-VSCode IDE specifically, we will not be able to help you troubleshoot. 
 
@@ -216,7 +205,69 @@ We’ll be using VSCode throughout the semester for our projects. If you prefer 
 2. Sign up for the GitHub student developer pack by joining the GitHub global campus program [here](https://www.notion.so/Week-1-Assignment-Getting-Started-8ada3cb6d2414bcba6afa1ca71344ced?pvs=21)
 3. Personalize your profile by following the instructions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/personalizing-your-profile)
 4. Create a new repository in your GitHub account
-5. Add access token and save it in your config
+![Create a repository](img/create_a_github_repository.png)
+5. Add an SSH key to your GitHub profile
+    1. Follow the instructions in docs/SSH Key Generation and Usage.md (Part 2) to generate an SSH key. 
+    Note: You may wish to name your SSH key something descriptive- perhaps something that references your dev laptop. You'll be using this key and others several times throughout the semester. 
+    2. Back in GitHub, click on your profile icon, then select `Settings`. \
+   ![Select SSH and GPG Keys](img/github_settings.png)
+    4. In the left-hand navigation, click on `SSH and GPG Keys`\
+    ![Select SSH and GPG Keys](img/select_ssh_and_gpg_keys.png)
+    5. Select `Add New SSH Key`; give it a name (something that references where you use it, e.g., your dev laptop) \
+    ![Add SSH Key](img/add_ssh_key_github.png)
+    6. Copy the contents of your PUBLIC SSH Key into the box that says 'Key'. To do this, open terminal or PowerShell and cd to the directory where your SSH key pair was saved when you created it. (On Mac, it's likely in `~/.ssh/` and in Windows, it's likely `C:\Users\YourUsername\.ssh\`)
+       
+        ### MacOS:
+        ```bash
+        cd ~/.ssh
+        ```
+
+        ### Windows:
+        ```bash
+        cd C:\Users\YourUsername\.ssh\
+        ```
+        2. Now you want to output the contents of your public ssh key:
+       ###  MacOS:
+        ```bash
+        cat <whatyounamedyoursshkey>.pub
+        ```
+
+        ### Windows:
+        ```bash
+        type <whatyounamedyoursshkey>.pub
+        ```
+       Copy the output in your terminal and paste it into the 'Key' box in your GitHub profile. 
+    
+    8. Now we want to make sure that our local machines know which private SSH key to use when reading and writing to GitHub. 
+    In your `~/.ssh/` or `C:\Users\YourUsername\.ssh\` folders, if the file does not already exist, create a file called config. 
+
+    You'll paste the following contents into your config file:
+
+    ### MacOS:
+    <aside>
+    Host github.com \
+        IdentityFile ~/.ssh/id_ed25519
+    </aside>
+
+    ### Windows:
+    <aside>
+    Host [git.domain.com]
+    User [user]
+    Port [number]
+    IdentitiesOnly=yes
+    PreferredAuthentications publickey
+    PasswordAuthentication no
+    # CMD
+    IdentityFile C:\Users\[User]\.ssh\[name_of_PRIVATE_key_file]
+    # BASH
+    IdentityFile /c/Users/[User]/.ssh/[name_of_PRIVATE_key_file]
+    </aside>
+
+   8. Follow these instructions to [set your username in git](https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git)
+
+    9. Set your email address in git: [https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address)
+
+:bulb: **Tip:** If you'd like to gain some more familiarity with GitHub and git, please visit [this repository](https://github.com/MIS547-Fall-2024/github-starter-course), where you can read more about how to get up-and-running with GitHub. If you would like to tour git and GitHub more thoroughly before we get going, check out their great documentation [here](https://skills.github.com/)
 
 ## Step 2: Create accounts on AWS, GCP, Azure, DO, and DockerHub using your GitHub student developer pack
 
@@ -235,41 +286,53 @@ We’ll be using VSCode throughout the semester for our projects. If you prefer 
 
 ## Step 4: Create a Slack account
 
-1. Create a Slack Account
-    1. Slack directions
-    2. Join the MIS547 Fall 2024 Slack Channel 
+1. Join the MIS547 Fall 2024 Slack Workspace by following [this invite link](https://join.slack.com/t/mis547/shared_invite/zt-2n3ijrmur-vnTsgSHxeGDNMdNT3v5mhA)
+2. If you are new to using Slack, check out their guide: ["Getting started for new Slack users"](https://slack.com/help/articles/218080037-Getting-started-for-new-Slack-users) 
 
-## Step 4: Set up your local project directory
 
-This is just a recommendation of how to structure your project directories for this class. You can of course use whatever structure you’d like to, this is supposed to be a helpful guide for organizing your tasks. 
+## Step 5: Clone the Assignment 1 repository from the MIS547 Organization
+We'll be using GitHub extensively throughout the semester. If you are new to using GitHub or structuring programming projects, I recommend creating a folder on your local machine in your home directory called `MIS547`. You can then clone the repositories into that folder so that they are easy to access. Here is an example of creating that project directory: 
+1. Open a terminal or command prompt.
+2. From your home directory, create a new directory called MIS547:
 
-### MacOS
+       ```bash
+       mkdir MIS547
+       ```
+3. Now navigate to the directory you just made:
 
-1. Start in your home directory
-2. Create a directory called MIS547 by typing the following in a terminal or command prompt:
-    
-    ```bash
-    mkdir MIS547
-    ```
-    
-3. Now, enter into that directory by typing the following:
-    
     ```bash
     cd MIS547
     ```
-    
-4. In that folder, create a directory for week 1
-    
+4. Now we'll clone the Assignment 1 directory:
+
     ```bash
-    mkdir week1
+    git clone https://github.com/MIS547-Fall-2024/mis547-fall-2024-classroom-assignment-1-getting-started-Assignment-1.git
     ```
+## Step 6: Complete the Assignment
+Open VSCode. In the file menu, select open folder. Navigate to MIS547/mis547-fall-2024-classroom-assignment-1-getting-started-Assignment-1 folder that was created when you cloned this repository. 
+Open the README.md file and edit the cell below by entering x between the [] brackets.
+<aside>
     
+:bulb: By selecting the following checkmarks, I attest that I have followed the instructions and have confirmed that following tasks were completed. If I choose to use my own existing development environment and tooling, I acknowledge that support for system issues I may have will be limited. 
+1. Installed a system package manager (homebrew for MacOS or choclatey for Windows) [ ] 
+2. Installed Docker Desktop [ ] 
+3. Installed Python dev tools [ ] 
+4. Installed git [ ] 
+5. Installed VSCode [ ] 
+6. Set up a GitHub account, added my SSH keys, and set my name and email address [ ] 
+7. Created an AWS Account [ ] 
+8. Created a GCP Account [ ] 
+9. Created an Azure Account [ ] 
+10. Created a DigitalOcean Account [ ] 
+11. Created a Slack Account and Joined the MIS547 Slack Workspace [ ] 
+13. Cloned the Assignment 1 repository [ ] 
+</aside>
 
-### Windows
+Lastly, you will commit your changes back to your repository. Run the following git workflow to commit your changes: 
+```bash
+git add README.md
+git commit -m "Updated README.md with attestation of assignment completion"
+git push
+```
 
-## Step 5: Clone the Week 1 repository from the MIS547 Organization into your week1 directory
-
-1. Link to Repository
-2. 
-
-By selecting the following checkmarks, I attest that I have followed the instructions and have confirmed that I can do or did the following.
+Congratulations! You've completed Assignment 1! 
